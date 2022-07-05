@@ -8,6 +8,10 @@ This repository contains a walkthrough of how to analyze RNA-Seq data, using a s
 
 ## Getting set up
 
+If you don't already have an account on [Github](https://github.com), make one now.
+
+1. Log in to your [Github](https://github.com) account.
+2. 
 
 ## Day 1: Cleaning and mapping reads
 
@@ -19,6 +23,8 @@ ssh [user]@[UTC address]
 
 You'll be prompted to enter your password, and then you'll be logged in to the cluster. 
 
+#### Assessing raw read quality
+
 In your home directory, you should have four fastq files with the extension ".fq". These are our raw sequences. Before we can do any analysis on them, we have to clean them to remove any low-quality reads or contamination. We'll start by examining the quality of the raw sequences, using the program FastQC. 
 
 First, create a new directory for our FastQC results to go into:
@@ -26,7 +32,7 @@ First, create a new directory for our FastQC results to go into:
 mkdir raw_reports
 ```
 
-Then, run the script ```fastqc_raw.sh``` in the directory with your fastq files. This should take about 5-10 minutes. 
+Then, run the script ```fastqc_raw.sh``` in the directory with your fastq files. This should take about 15-20 minutes. 
 ```shell
 bash fastqc_raw.sh
 ```
@@ -38,7 +44,9 @@ scp -r [user]@[UTC address]:/home/[user]/raw_reports/*.html ~/Desktop/
 
 This should copy the output files from your FastQC run to your Desktop on your local computer. Click on the files that you just copied, open them up, and see what the sequencing data looks like. Is it high quality? How can you tell? 
 
+#### Removing adapters and low-quality sequences
 
+Now that we know what our raw reads look like, we should trim the sequencing adapters and remove any low-quality reads. We can do this using the program Trimmomatic. Trimmomatic is highly customizable, and requires several parameters 
 
 ## Day 2: Generating read counts and testing for differential gene expression
 
