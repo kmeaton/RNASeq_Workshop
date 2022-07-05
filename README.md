@@ -11,9 +11,12 @@ This repository contains a walkthrough of how to analyze RNA-Seq data, using a s
 If you don't already have an account on [Github](https://github.com), make one now.
 
 1. Log in to your [Github](https://github.com) account.
+
 2. Fork this repository by clicking the "Fork" button on the upper right of this page. 
 ..After a few seconds, you should be looking at your own copy of this repository in your own Github account. 
+
 3. Click the green "Code" button at the upper right of this page. Click the tab that says HTTPS, then copy the link that's shown below it. 
+
 4. Log in to your UTC computing cluster account by typing the following code into the terminal, substituting your UTC username in where it says [user].
 ```shell
 ssh [user]@[UTC address]
