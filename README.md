@@ -22,12 +22,10 @@ If you don't already have an account on [Github](https://github.com), make one n
 ssh [user]@[UTC address]
 ```
 
-5. Once you're logged in, in your home directory, type the following:
+5. Once you're logged in, in your home directory, type the following to clone into the repository. Make sure you're cloning into __your__ fork of the repository, not my original one.
 ```shell
 git clone the-url-you-copied-in-step-3
 ```
-
-..hit enter to clone the repository. Make sure you're cloning into __your__ fork of the repository, not my original one. 
 
 6. Next, move into this directory:
 ```shell
