@@ -11,6 +11,31 @@ This repository contains a walkthrough of how to analyze RNA-Seq data, using a s
 
 ## Day 1: Cleaning and mapping reads
 
+Log in to your account on the UTC Computing Cluster. 
+
+```shell
+ssh [user]@[UTC address]
+```
+
+You'll be prompted to enter your password, and then you'll be logged in to the cluster. 
+
+In your home directory, you should have four fastq files with the extension ".fq". These are our raw sequences. Before we can do any analysis on them, we have to clean them to remove any low-quality reads or contamination. We'll start by examining the quality of the raw sequences, using the program FastQC. 
+
+First, create a new directory for our FastQC results to go into:
+```shell
+mkdir raw_reports
+```
+
+Then, run the script ```fastqc_raw.sh``` in the directory with your fastq files. This script should take around 20 minutes to run on your 4 files. 
+
+When the script is done running, take a look at the output. You'll have to download the reports to your local machine. Open a terminal on your __local machine__ and type the following, substituting in your UTC username where it says [user]:
+```shell
+scp -r [user]@[UTC address]:/home/[user]/raw_reports/*.html ~/Desktop/
+```
+
+This should copy the output files from your FastQC run to your Desktop on your local computer. Click on the files that you just copied, open them up, and see what the sequencing data looks like. Is it high quality? How can you tell? 
+
+
 
 ## Day 2: Generating read counts and testing for differential gene expression
 
