@@ -12,15 +12,26 @@ If you don't already have an account on [Github](https://github.com), make one n
 
 1. Log in to your [Github](https://github.com) account.
 2. Fork this repository by clicking the "Fork" button on the upper right of this page. 
-
-After a few seconds, you should be looking at your own copy of this repository in your own Github account. 
-
+..After a few seconds, you should be looking at your own copy of this repository in your own Github account. 
 3. Click the green "Code" button at the upper right of this page. Click the tab that says HTTPS, then copy the link that's shown below it. 
-4. Log 
+4. Log in to your UTC computing cluster account by typing the following code into the terminal, substituting your UTC username in where it says [user].
+..```shell
+..ssh [user]@[UTC address]
+..```
+5. Once you're logged in, in your home directory, type the following:
+..```shell
+..git clone the-url-you-copied-in-step-3
+..```
+..hit enter to clone the repository. Make sure you're cloning into __your__ fork of the repository, not my original one. 
+6. Next, move into this directory:
+..```shell
+..cd RNASeq_Workshop
+..```
+7. At this point, you should be in your own local copy of the repository, which contains all the scripts you'll need to edit and run to analyze our practice dataset. 
 
 ## Day 1: Cleaning and mapping reads
 
-Log in to your account on the UTC Computing Cluster. 
+Log in to your account on the UTC Computing Cluster, substituting your UTC username in where it says [user]. 
 
 ```shell
 ssh [user]@[UTC address]
