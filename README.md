@@ -26,7 +26,10 @@ First, create a new directory for our FastQC results to go into:
 mkdir raw_reports
 ```
 
-Then, run the script ```fastqc_raw.sh``` in the directory with your fastq files. This script should take around 20 minutes to run on your 4 files. 
+Then, run the script ```fastqc_raw.sh``` in the directory with your fastq files. This should take about 5-10 minutes. 
+```shell
+bash fastqc_raw.sh
+```
 
 When the script is done running, take a look at the output. You'll have to download the reports to your local machine. Open a terminal on your __local machine__ and type the following, substituting in your UTC username where it says [user]:
 ```shell
