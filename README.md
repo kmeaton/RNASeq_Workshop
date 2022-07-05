@@ -17,7 +17,7 @@ If you don't already have an account on [Github](https://github.com), make one n
 
 3. Click the green "Code" button at the upper right of this page. Click the tab that says HTTPS, then copy the link that's shown below it. 
 
-4. Log in to your UTC computing cluster account by typing the following code into the terminal, substituting your UTC username in where it says [user].
+4. Log in to your UTC computing cluster account by typing the following code into the terminal, substituting your UTC username in where it says [user]. You'll be prompted to enter a password, which you'll type right into the terminal.
 ```shell
 ssh [user]@[UTC address]
 ```
