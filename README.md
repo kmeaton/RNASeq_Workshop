@@ -42,11 +42,15 @@ Log in to your account on the UTC Computing Cluster, substituting your UTC usern
 ssh [user]@[UTC address]
 ```
 
-You'll be prompted to enter your password, and then you'll be logged in to the cluster. 
+You'll be prompted to enter your password, and then you'll be logged in to the cluster. Move into the directory you cloned yesterday, which contains all the scripts you'll need to work with today.
+
+```shell
+cd RNASeq_Workshop
+```
 
 #### Assessing raw read quality
 
-In your home directory, you should have four fastq files with the extension ".fq". These are our raw sequences. Before we can do any analysis on them, we have to clean them to remove any low-quality reads or contamination. We'll start by examining the quality of the raw sequences, using the program FastQC. 
+In your home directory (MAYBE? MIGHT HAVE TO COPY THESE IN? CAN WE HAVE A CLASS DIRECTORY?), you should have four fastq files with the extension ".fq". These are our raw sequences. Before we can do any analysis on them, we have to clean them to remove any low-quality reads or contamination. We'll start by examining the quality of the raw sequences, using the program FastQC. 
 
 First, create a new directory for our FastQC results to go into:
 ```shell
@@ -67,7 +71,12 @@ This should copy the output files from your FastQC run to your Desktop on your l
 
 #### Removing adapters and low-quality sequences
 
-Now that we know what our raw reads look like, we should trim the sequencing adapters and remove any low-quality reads. We can do this using the program Trimmomatic. Trimmomatic is highly customizable, and requires several parameters 
+Now that we know what our raw reads look like, we should trim the sequencing adapters and remove any low-quality reads. We can do this using the program Trimmomatic. Examine the Trimmomatic script we are going to run by typing the following:
+
+```shell
+cd RNASeq_Workshop
+less trimmomatic.sh
+```
 
 ## Day 2: Generating read counts and testing for differential gene expression
 
@@ -77,3 +86,4 @@ This workshop was made possible by funding provided to Fernando Alda from the Un
 
 The sample datasets used in this analysis are publicly available on NCBI. The version of the *A. polyacanthus* genome used is available at accession number GCF_002109545.1. The raw RNA-Seq reads are available under NCBI BioProject Number PRJNA489934 and SRA accession number SRP160415. We thank the following authors of the study that generated this dataset: Moises Bernal, Celia Schunter, Robert Lehmann, Damien Lightfoot, Bridie Allan, Heather Veilleux, Jodie Rummer, Philip Munday, and Timothy Ravasi, as they have graciously allowed us to use their data (Bernal et al. 2020, *Science Advances* 6(12): eaay3423). 
 
+The formatting of this tutorial, as well as the "Getting set up" portion of this page, borrow heavily from the Scripting for Biologists python tutorials written by [Jamie Oaks](http://phyletica.org) available [here](https://github.com/joaks1). 
