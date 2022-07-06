@@ -50,7 +50,7 @@ cd RNASeq_Workshop
 
 ### Assessing raw read quality
 
-In your home directory (MAYBE? MIGHT HAVE TO COPY THESE IN? CAN WE HAVE A CLASS DIRECTORY?), you should have four fastq files with the extension ".fq". These are our raw sequences. Before we can do any analysis on them, we have to clean them to remove any low-quality reads or contamination. We'll start by examining the quality of the raw sequences, using the program FastQC. 
+In your home directory (MAYBE? MIGHT HAVE TO COPY THESE IN? CAN WE HAVE A CLASS DIRECTORY?), you should have eight fastq files with the extension ".fq". These are our raw sequences. Before we can do any analysis on them, we have to clean them to remove any low-quality reads or contamination. We'll start by examining the quality of the raw sequences, using the program FastQC. 
 
 First, create a new directory for our FastQC results to go into:
 ```shell
@@ -77,6 +77,22 @@ Now that we know what our raw reads look like, we should trim the sequencing ada
 cd RNASeq_Workshop
 less trimmomatic.sh
 ```
+
+This program takes paired-end sequencing data for each of our samples, trims any sequencing adapters that are present in the reads, and then removes any low-quality sequences from the dataset. You'll end up with four files for each sample:
+
+* [sample]\_1\_paired.fq
+* [sample]\_1\_unpaired.fq
+* [sample]\_2\_paired.fq
+* [sample]\_2\_unpaired.fq
+
+We will continue our analyses only using the "paired" files. These contain sequences where both members of a "pair" of reads have passed the quality filtering step. Check out the sizes of the fastq files containing the paired and unpaired reads by running the following commands:
+
+```shell
+ls -lh *_paired.fq
+ls -lh *_unpaired.fq
+```
+
+The fourth column in the output from this command will show the approximate size of the file. Since the majority of our reads were of high quality, the "paired" files (where both reads in a mate pair passed the quality filtering step) should be several times larger than the "unpaired" files. 
 
 ## Day 2: Generating read counts and testing for differential gene expression
 
