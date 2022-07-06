@@ -48,7 +48,7 @@ You'll be prompted to enter your password, and then you'll be logged in to the c
 cd RNASeq_Workshop
 ```
 
-#### Assessing raw read quality
+### Assessing raw read quality
 
 In your home directory (MAYBE? MIGHT HAVE TO COPY THESE IN? CAN WE HAVE A CLASS DIRECTORY?), you should have four fastq files with the extension ".fq". These are our raw sequences. Before we can do any analysis on them, we have to clean them to remove any low-quality reads or contamination. We'll start by examining the quality of the raw sequences, using the program FastQC. 
 
@@ -69,7 +69,7 @@ scp -r [user]@[UTC address]:/home/[user]/raw_reports/*.html ~/Desktop/
 
 This should copy the output files from your FastQC run to your Desktop on your local computer. Click on the files that you just copied, open them up, and see what the sequencing data looks like. Is it high quality? How can you tell? 
 
-#### Removing adapters and low-quality sequences
+### Removing adapters and low-quality sequences
 
 Now that we know what our raw reads look like, we should trim the sequencing adapters and remove any low-quality reads. We can do this using the program Trimmomatic. Examine the Trimmomatic script we are going to run by typing the following:
 
