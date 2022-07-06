@@ -19,7 +19,7 @@ If you don't already have an account on [Github](https://github.com), make one n
 
 4. Log in to your UTC computing cluster account by typing the following code into the terminal, substituting your UTC username in where it says [user]. You'll be prompted to enter a password, which you'll type right into the terminal.
 ```shell
-ssh [user]@[UTC address]
+ssh [user]@ts.simcenter.utc.edu
 ```
 
 5. Once you're logged in, in your home directory, type the following to clone into the repository. Make sure you're cloning into __your__ fork of the repository, not my original one.
@@ -39,7 +39,7 @@ cd RNASeq_Workshop
 Log in to your account on the UTC Computing Cluster, substituting your UTC username in where it says [user]. 
 
 ```shell
-ssh [user]@[UTC address]
+ssh [user]@ts.simcenter.utc.edu
 ```
 
 You'll be prompted to enter your password, and then you'll be logged in to the cluster. Move into the directory you cloned yesterday, which contains all the scripts you'll need to work with today.
@@ -64,7 +64,7 @@ bash fastqc_raw.sh
 
 When the script is done running, take a look at the output. You'll have to download the reports to your local machine. Open a terminal on your __local machine__ and type the following, substituting in your UTC username where it says [user]:
 ```shell
-scp -r [user]@[UTC address]:/home/[user]/raw_reports/*.html ~/Desktop/
+scp -r [user]@ts.simcenter.utc.edu:/home/[user]/raw_reports/*.html ~/Desktop/
 ```
 
 This should copy the output files from your FastQC run to your Desktop on your local computer. Click on the files that you just copied, open them up, and see what the sequencing data looks like. Is it high quality? How can you tell? 
