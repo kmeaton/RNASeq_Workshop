@@ -60,9 +60,11 @@ First, create a new directory for our FastQC results to go into:
 mkdir ~/raw_reports
 ```
 
-Then, run the script ```fastqc_raw.sh```. This should take about 15-20 minutes. 
+Then, run the following code from the command line. We could put this in a script, but it's pretty quick and can be run in interactive mode. It should take less than 10 minutes to run on your 8 files. 
 ```shell
-sbatch fastqc_raw.sh
+module load fastQC
+# This next line tells the computer to run fastqc on all files in the current folder that have the extension ".fq". The -o flag tells the program to put the output files in the "raw_results" folder we just created. 
+fastqc *.fq -o raw_results
 ```
 
 When the script is done running, take a look at the output. You'll have to download the reports to your local machine. Open a terminal on your __local machine__ and type the following:
@@ -70,9 +72,7 @@ When the script is done running, take a look at the output. You'll have to downl
 scp -r [user]@epyc.simcenter.utc.edu:~/raw_reports/*.html ~/Desktop/
 ```
 
-You'll be prompted to enter your UTC password
-
-This should copy the output files from your FastQC run to your Desktop on your local computer. Click on the files that you just copied, open them up, and see what the sequencing data looks like. Is it high quality? How can you tell? 
+You'll be prompted to enter your UTC password here, and then the reports will be copied from your fastqc run to the Desktop on your local computer. Click on the files that you just copied, open them up, and see what the sequencing data looks like. Is it high quality? How can you tell? 
 
 ### Removing adapters and low-quality sequences
 
