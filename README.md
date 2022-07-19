@@ -12,8 +12,7 @@ If you don't already have an account on [Github](https://github.com), make one n
 
 1. Log in to your [Github](https://github.com) account.
 
-2. Fork this repository by clicking the "Fork" button on the upper right of this page. 
-..After a few seconds, you should be looking at your own copy of this repository in your own Github account. 
+2. Fork this repository by clicking the "Fork" button on the upper right of this page. After a few seconds, you should be looking at your own copy of this repository in your own Github account. 
 
 3. Click the green "Code" button at the upper right of this page. Click the tab that says HTTPS, then copy the link that's shown below it. 
 
@@ -50,7 +49,9 @@ cd RNASeq_Workshop
 
 ### Assessing raw read quality
 
-In your home directory (MAYBE? MIGHT HAVE TO COPY THESE IN? CAN WE HAVE A CLASS DIRECTORY?), you should have eight fastq files with the extension ".fq". These are our raw sequences. Before we can do any analysis on them, we have to clean them to remove any low-quality reads or contamination. We'll start by examining the quality of the raw sequences, using the program FastQC. 
+For this tutorial, we are going to use a sample RNA-Seq dataset from [this paper](https://www.science.org/doi/full/10.1126/sciadv.aay3423). The authors examined how gene expression changed in several species of fish as they were exposed to abnormally warm temperatures over several months. We will use RNA-Seq data from one of the species (the spiny chromis damselfish, *Acanthochromis polyacanthus*) and compare gene expression between two months (December, when temperatures were relatively normal, and February, when temperatures were far above average). 
+
+In your home directory, you should have eight fastq files with the extension ".fq". These are our raw sequences. Before we can do any analysis on them, we have to clean them to remove any low-quality reads or contamination. We'll start by examining the quality of the raw sequences, using the program FastQC. 
 
 First, create a new directory for our FastQC results to go into:
 ```shell
@@ -59,7 +60,7 @@ mkdir raw_reports
 
 Then, run the script ```fastqc_raw.sh``` in the directory with your fastq files. This should take about 15-20 minutes. 
 ```shell
-bash fastqc_raw.sh
+sbatch fastqc_raw.sh
 ```
 
 When the script is done running, take a look at the output. You'll have to download the reports to your local machine. Open a terminal on your __local machine__ and type the following, substituting in your UTC username where it says [user]:
@@ -93,6 +94,24 @@ ls -lh *_unpaired.fq
 ```
 
 The fourth column in the output from this command will show the approximate size of the file. Since the majority of our reads were of high quality, the "paired" files (where both reads in a mate pair passed the quality filtering step) should be several times larger than the "unpaired" files. 
+
+### Checking the quality of our trimmed and filtered reads
+
+Let's make sure that the filtering steps worked well, and that the quality of our sequences increased after trimming and filtering. To do this, we'll run FastQC again, but this time on the \*\_paired.fq files, which contain the sequences we will proceed with for our analyses.
+
+We'll make a new directory for these reports.
+
+```shell
+mkdir filtered_reports
+```
+
+Then, modify the fastqc_raw.sh script in your folder so that it will run on your filtered files and send the output to the filtered_reports folder we just created, and save it as a new file called fastqc_filtered.sh. You can do this in your favorite text editor, like nano or vim. 
+
+Run your new script, fastqc_filtered.sh, and then download the reports to your local machine like we did before. Check out the sequence quality now - how has it improved?
+
+### Mapping our trimmed reads to a reference
+
+Now that we have high-quality, filtered reads for each of our samples, we need to map them to a reference genome. This allows us to quantify the number of sequences in our dataset that originated from each gene in our organism's genome. For our analyses, we will use the published genome of the spiny chromis damselfish 
 
 ## Day 2: Generating read counts and testing for differential gene expression
 
