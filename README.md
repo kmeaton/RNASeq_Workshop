@@ -18,7 +18,7 @@ If you don't already have an account on [Github](https://github.com), make one n
 
 4. Log in to your UTC computing cluster account by typing the following code into the terminal, substituting your UTC username in where it says [user]. You'll be prompted to enter a password, which you'll type right into the terminal.
 ```shell
-ssh [user]@ts.simcenter.utc.edu
+ssh [user]@epyc.simcenter.utc.edu
 ```
 
 5. Once you're logged in, in your home directory, type the following to clone into the repository. Make sure you're cloning into __your__ fork of the repository, not my original one.
@@ -38,7 +38,7 @@ cd RNASeq_Workshop
 Log in to your account on the UTC Computing Cluster, substituting your UTC username in where it says [user]. 
 
 ```shell
-ssh [user]@ts.simcenter.utc.edu
+ssh [user]@epyc.simcenter.utc.edu
 ```
 
 You'll be prompted to enter your password, and then you'll be logged in to the cluster. Move into the directory you cloned yesterday, which contains all the scripts you'll need to work with today.
@@ -49,24 +49,28 @@ cd RNASeq_Workshop
 
 ### Assessing raw read quality
 
-For this tutorial, we are going to use a sample RNA-Seq dataset from [this paper](https://www.science.org/doi/full/10.1126/sciadv.aay3423). The authors examined how gene expression changed in several species of fish as they were exposed to abnormally warm temperatures over several months. We will use RNA-Seq data from one of the species (the spiny chromis damselfish, *Acanthochromis polyacanthus*) and compare gene expression between two months (December, when temperatures were relatively normal, and February, when temperatures were far above average). 
+For this tutorial, we are going to use a sample RNA-Seq dataset from [this paper](https://www.science.org/doi/full/10.1126/sciadv.aay3423). The authors examined how gene expression changed in several species of fish as they were exposed to unseasonably warm temperatures over several months. We will use RNA-Seq data from one of the species (the spiny chromis damselfish, *Acanthochromis polyacanthus*) and compare gene expression between two months (December, when temperatures were relatively normal, and February, when temperatures were far above average). 
 
-In your home directory, you should have eight fastq files with the extension ".fq". These are our raw sequences. Before we can do any analysis on them, we have to clean them to remove any low-quality reads or contamination. We'll start by examining the quality of the raw sequences, using the program FastQC. 
+In your home directory, you should have eight fastq files with the extension ".fq". These fastq files contain "raw" RNA-Seq reads for 4 samples - 2 from December and 2 from February. Each sample will have data in two different files: one will have the extension \_mate1.fq, and the other will be \_mate2.fq. This is because these samples were sequenced using paired-end Illumina sequencing, which generates two sequences per input molecule of RNA (one sequence in the "forward" direction, and one in the "reverse" direction). These paired sequences are stored in two different files.  
+
+Before we can do any analysis on our raw data, we have to clean them to remove any low-quality reads or contamination. We'll start by examining the quality of the sequences, using the program FastQC. 
 
 First, create a new directory for our FastQC results to go into:
 ```shell
-mkdir raw_reports
+mkdir ~/raw_reports
 ```
 
-Then, run the script ```fastqc_raw.sh``` in the directory with your fastq files. This should take about 15-20 minutes. 
+Then, run the script ```fastqc_raw.sh```. This should take about 15-20 minutes. 
 ```shell
 sbatch fastqc_raw.sh
 ```
 
-When the script is done running, take a look at the output. You'll have to download the reports to your local machine. Open a terminal on your __local machine__ and type the following, substituting in your UTC username where it says [user]:
+When the script is done running, take a look at the output. You'll have to download the reports to your local machine. Open a terminal on your __local machine__ and type the following:
 ```shell
-scp -r [user]@ts.simcenter.utc.edu:/home/[user]/raw_reports/*.html ~/Desktop/
+scp -r [user]@epyc.simcenter.utc.edu:~/raw_reports/*.html ~/Desktop/
 ```
+
+You'll be prompted to enter your UTC password
 
 This should copy the output files from your FastQC run to your Desktop on your local computer. Click on the files that you just copied, open them up, and see what the sequencing data looks like. Is it high quality? How can you tell? 
 
