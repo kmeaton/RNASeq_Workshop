@@ -63,8 +63,8 @@ mkdir ~/raw_reports
 Then, run the following code from the command line. We could put this in a script, but it's pretty quick and can be run in interactive mode. It should take less than 10 minutes to run on your 8 files. 
 ```shell
 module load fastQC
-# This next line tells the computer to run fastqc on all files in the current folder that have the extension ".fq". The -o flag tells the program to put the output files in the "raw_results" folder we just created. 
-fastqc *.fq -o raw_results
+# This next line tells the computer to run fastqc on all files in the current folder that have the extension ".fq". The -o flag tells the program to put the output files in the "raw_reports" folder we just created. 
+fastqc *.fq -o raw_reports
 ```
 
 When the script is done running, take a look at the output. You'll have to download the reports to your local machine. Open a terminal on your __local machine__ and type the following:
