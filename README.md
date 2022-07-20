@@ -4,7 +4,7 @@ This repository contains a walkthrough of how to analyze RNA-Seq data, using a s
 ## Contents
 1. [Getting set up](https://github.com/kmeaton/RNASeq_Workshop#getting-set-up)
 2. [Cleaning and mapping reads](https://github.com/kmeaton/RNASeq_Workshop#day-1-cleaning-and-mapping-reads)
-3. [Counting reads and analyzing expression patterns](https://github.com/kmeaton/RNASeq_Workshop#day-2-generating-read-counts-and-testing-for-differential-gene-expression)
+3. [Analyzing expression patterns](https://github.com/kmeaton/RNASeq_Workshop#day-2-testing-for-differential-gene-expression)
 
 ## Getting set up
 
@@ -63,7 +63,7 @@ ls
 
 You should now see that in your home directory, you have your own copies of the raw data files. 
 
-Before we can do any analysis on our raw data, we have to clean them to remove any low-quality reads or contamination. We'll start by examining the quality of the sequences, using the program FastQC. 
+Before we can do any analysis on our raw data, we have to clean them to remove any low-quality reads or contamination. We'll start by examining the quality of the sequences, using the program [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/). 
 
 First, create a new directory for our FastQC results to go into:
 ```shell
@@ -78,7 +78,7 @@ cat fastqc.sh
 sbatch fastqc.sh
 ```
 
-When the script is done running, take a look at the output. You'll have to download the reports to your local machine. Open a terminal on your __local machine__ and type the following:
+This should take just a couple of minutes to run. When the script is done running, take a look at the output. You'll have to download the reports to your local machine. Open a terminal on your __local machine__ and type the following:
 ```shell
 scp -r [user]@epyc.simcenter.utc.edu:~/raw_reports/*.html ~/Desktop/
 ```
@@ -96,12 +96,14 @@ cat trimmomatic.sh
 sbatch trimmomatic.sh
 ```
 
-This program takes paired-end sequencing data for each of our samples, trims any sequencing adapters that are present in the reads, and then removes any low-quality sequences from the dataset. You'll end up with four files for each sample:
+This should only take a few minutes. This program takes paired-end sequencing data for each of our samples, trims any sequencing adapters that are present in the reads, and then removes any low-quality sequences from the dataset. You'll end up with four files for each sample:
 
-* [sample]\_1\_paired.fq
-* [sample]\_1\_unpaired.fq
-* [sample]\_2\_paired.fq
-* [sample]\_2\_unpaired.fq
+```
+[sample]\_1\_paired.fq
+[sample]\_1\_unpaired.fq
+[sample]\_2\_paired.fq
+[sample]\_2\_unpaired.fq
+```
 
 We will continue our analyses only using the "paired" files. These contain sequences where both members of a "pair" of reads have passed the quality filtering step. Check out the sizes of the fastq files containing the paired and unpaired reads by running the following commands:
 
@@ -124,13 +126,36 @@ mkdir filtered_reports
 
 Then, modify the ```fastqc.sh``` script in your folder so that it will run on your filtered files and send the output to the filtered_reports folder we just created, and save it as a new file called ```fastqc_filtered.sh```. You can do this in your favorite text editor, like nano or vim. 
 
-Run your new script, fastqc_filtered.sh, and then download the reports to your local machine like we did before. Check out the sequence quality now - how has it improved?
+Run your new script, ```fastqc_filtered.sh```, and then download the reports to your local machine like we did before. Check out the sequence quality now - how has it improved?
 
 ### Mapping our trimmed reads to a reference
 
 Now that we have high-quality, filtered reads for each of our samples, we need to map them to a reference genome. This allows us to quantify the number of sequences in our dataset that originated from each gene in our organism's genome. For our analyses, we will use the published genome of the spiny chromis damselfish, *A. polyacanthus* (publicly available on NCBI at accession number: GCF_002109545.1). 
 
-## Day 2: Generating read counts and testing for differential gene expression
+We will use a program called [HISAT2](http://daehwankimlab.github.io/hisat2/manual/) to map the RNA-Seq reads to the *A. polyacanthus* genome. HISAT2 requires that you first build an index of the reference genome, which it then uses during the mapping process. Indexing the reference genome takes about an hour, so we have provided the indexed genome for you. The code that we used to index the genome is included in the script ```hisat2.sh```, so that you can see how it was done, but it has been commented out so that you don't have to run it. 
+
+Instead of building our index, we'll just copy it from the shared class folder. 
+
+```shell
+cp /scr/south_east_comp/*.ht2 ~/
+```
+
+Once your index is copied from the shared folder, examine the ```hisat2.sh``` script in your RNASeq_Workshop folder. Once you understand what it is doing, run it.
+
+```shell
+# Examine the script
+cat hisat2.sh
+# Run the script
+sbatch hisat2.sh
+```
+
+### Generating read count data
+
+For each sample, we have mapped our RNA-Seq reads to our reference genome. We now need to generate a matrix of counts that correspond to the expression levels of each gene. We can do this using the program [StringTie](https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual). 
+
+
+
+## Day 2: Testing for differential gene expression
 
 
 ## Acknowledgements
