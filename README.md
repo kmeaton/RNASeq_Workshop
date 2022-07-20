@@ -51,7 +51,17 @@ cd RNASeq_Workshop
 
 For this tutorial, we are going to use a sample RNA-Seq dataset from [this paper](https://www.science.org/doi/full/10.1126/sciadv.aay3423). The authors examined how gene expression changed in several species of fish as they were exposed to unseasonably warm temperatures over several months. We will use RNA-Seq data from one of the species (the spiny chromis damselfish, *Acanthochromis polyacanthus*) and compare gene expression between two months (December, when temperatures were relatively normal, and February, when temperatures were far above average). 
 
-In your home directory, you should have eight fastq files with the extension ".fq". These fastq files contain "raw" RNA-Seq reads for 4 samples - 2 from December and 2 from February. Each sample will have data in two different files: one will have the extension \_mate1.fq, and the other will be \_mate2.fq. This is because these samples were sequenced using paired-end Illumina sequencing, which generates two sequences per input molecule of RNA (one sequence in the "forward" direction, and one in the "reverse" direction). These paired sequences are stored in two different files.  
+In the shared class directory, there are 8 files with the extension ".fq". These fastq files contain "raw" RNA-Seq reads for 4 samples - 2 from December and 2 from February. Each sample will have data in two different files: one will have the extension \_mate1.fq, and the other will be \_mate2.fq. This is because these samples were sequenced using paired-end Illumina sequencing, which generates two sequences per input molecule of RNA (one sequence in the "forward" direction, and one in the "reverse" direction). These paired sequences are stored in two different files.
+
+You'll need to copy these files from the class directory to your home directory before you can start working on them. Type the following code in your terminal:
+
+```shell
+cp /scr/south_east_comp/*.fq ~/
+cd ~
+ls
+```
+
+You should now see that in your home directory, you have your own copies of the raw data files. 
 
 Before we can do any analysis on our raw data, we have to clean them to remove any low-quality reads or contamination. We'll start by examining the quality of the sequences, using the program FastQC. 
 
@@ -60,11 +70,12 @@ First, create a new directory for our FastQC results to go into:
 mkdir ~/raw_reports
 ```
 
-Then, run the following code from the command line. We could put this in a script, but it's pretty quick and can be run in interactive mode. It should take less than 10 minutes to run on your 8 files. 
+Then, move into the RNASeq_Workshop folder that you cloned from Github. This folder contains all the scripts you'll need to run today. Examine the code in the script ```fastqc.sh```, and then run the script by typing the following:
 ```shell
-module load fastQC
-# This next line tells the computer to run fastqc on all files in the current folder that have the extension ".fq". The -o flag tells the program to put the output files in the "raw_reports" folder we just created. 
-fastqc *.fq -o raw_reports
+# First examine the code in the script
+cat fastqc.sh
+# Once you understand what the code is doing, run the script
+sbatch fastqc.sh
 ```
 
 When the script is done running, take a look at the output. You'll have to download the reports to your local machine. Open a terminal on your __local machine__ and type the following:
@@ -76,11 +87,13 @@ You'll be prompted to enter your UTC password here, and then the reports will be
 
 ### Removing adapters and low-quality sequences
 
-Now that we know what our raw reads look like, we should trim the sequencing adapters and remove any low-quality reads. We can do this using the program Trimmomatic. Examine the Trimmomatic script we are going to run by typing the following:
+Now that we know what our raw reads look like, we should trim the sequencing adapters and remove any low-quality reads. We can do this using the program Trimmomatic. Move into the RNASeq_Workshop folder and examine the Trimmomatic script we are going to run. For more information on the quality trimming parameters, examine [the manual for trimmomatic](http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf). Once you understand what the code is doing, run the script by typing the following:
 
 ```shell
-cd RNASeq_Workshop
-less trimmomatic.sh
+# Examine the code in the script
+cat trimmomatic.sh
+# Run the script
+sbatch trimmomatic.sh
 ```
 
 This program takes paired-end sequencing data for each of our samples, trims any sequencing adapters that are present in the reads, and then removes any low-quality sequences from the dataset. You'll end up with four files for each sample:
@@ -109,13 +122,13 @@ We'll make a new directory for these reports.
 mkdir filtered_reports
 ```
 
-Then, modify the fastqc_raw.sh script in your folder so that it will run on your filtered files and send the output to the filtered_reports folder we just created, and save it as a new file called fastqc_filtered.sh. You can do this in your favorite text editor, like nano or vim. 
+Then, modify the ```fastqc.sh``` script in your folder so that it will run on your filtered files and send the output to the filtered_reports folder we just created, and save it as a new file called ```fastqc_filtered.sh```. You can do this in your favorite text editor, like nano or vim. 
 
 Run your new script, fastqc_filtered.sh, and then download the reports to your local machine like we did before. Check out the sequence quality now - how has it improved?
 
 ### Mapping our trimmed reads to a reference
 
-Now that we have high-quality, filtered reads for each of our samples, we need to map them to a reference genome. This allows us to quantify the number of sequences in our dataset that originated from each gene in our organism's genome. For our analyses, we will use the published genome of the spiny chromis damselfish 
+Now that we have high-quality, filtered reads for each of our samples, we need to map them to a reference genome. This allows us to quantify the number of sequences in our dataset that originated from each gene in our organism's genome. For our analyses, we will use the published genome of the spiny chromis damselfish, *A. polyacanthus* (publicly available on NCBI at accession number: GCF_002109545.1). 
 
 ## Day 2: Generating read counts and testing for differential gene expression
 
