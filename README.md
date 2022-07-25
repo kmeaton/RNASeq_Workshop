@@ -51,7 +51,7 @@ cd RNASeq_Workshop
 
 For this tutorial, we are going to use a sample RNA-Seq dataset from [this paper](https://www.science.org/doi/full/10.1126/sciadv.aay3423). The authors examined how gene expression changed in several species of fish as they were exposed to unseasonably warm temperatures over several months. We will use RNA-Seq data from one of the species (the spiny chromis damselfish, *Acanthochromis polyacanthus*) and compare gene expression between two months (December, when temperatures were relatively normal, and February, when temperatures were far above average). 
 
-In the shared class directory, there are 8 files with the extension ```.fq```. These fastq files contain "raw" RNA-Seq reads for 4 samples - 2 from December and 2 from February. Each sample will have data in two different files: one will have the extension ```\_mate1.fq```, and the other will be ```\_mate2.fq```. This is because these samples were sequenced using paired-end Illumina sequencing, which generates two sequences per input molecule of RNA (one sequence in the "forward" direction, and one in the "reverse" direction). These paired sequences are stored in two different files.
+In the shared class directory, there are 8 files with the extension ```.fq```. These fastq files contain "raw" RNA-Seq reads for 4 samples - 2 from December and 2 from February. Each sample will have data in two different files: one will have the extension ```_mate1.fq```, and the other will be ```_mate2.fq```. This is because these samples were sequenced using paired-end Illumina sequencing, which generates two sequences per input molecule of RNA (one sequence in the "forward" direction, and one in the "reverse" direction). These paired sequences are stored in two different files.
 
 You'll need to copy these files from the class directory to your home directory before you can start working on them. Type the following code in your terminal:
 
@@ -99,10 +99,10 @@ sbatch trimmomatic.sh
 This should only take a few minutes. This program takes paired-end sequencing data for each of our samples, trims any sequencing adapters that are present in the reads, and then removes any low-quality sequences from the dataset. You'll end up with four files for each sample:
 
 ```
-[sample]\_1\_paired.fq
-[sample]\_1\_unpaired.fq
-[sample]\_2\_paired.fq
-[sample]\_2\_unpaired.fq
+[sample]_1_paired.fq
+[sample]_1_unpaired.fq
+[sample]_2_paired.fq
+[sample]_2_unpaired.fq
 ```
 
 We will continue our analyses only using the "paired" files. These contain sequences where both members of a "pair" of reads have passed the quality filtering step. Check out the sizes of the fastq files containing the paired and unpaired reads by running the following commands:
@@ -116,7 +116,7 @@ The fourth column in the output from this command will show the approximate size
 
 ### Checking the quality of our trimmed and filtered reads
 
-Let's make sure that the filtering steps worked well, and that the quality of our sequences increased after trimming and filtering. To do this, we'll run FastQC again, but this time on the ```\*\_paired.fq``` files, which contain the sequences we will proceed with for our analyses.
+Let's make sure that the filtering steps worked well, and that the quality of our sequences increased after trimming and filtering. To do this, we'll run FastQC again, but this time on the ```_paired.fq``` files, which contain the sequences we will proceed with for our analyses.
 
 We'll make a new directory for these reports.
 
