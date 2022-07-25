@@ -199,7 +199,9 @@ You can see that each sample has its own column, and each gene has its own row. 
 
 Today, we are going to use a gene count matrix to test for statistically significant differentially expressed genes between fish in two different treatment groups. We prepared one of these gene count matrices yesterday, for four samples. Because it's harder to detect significant differences between treatments when you have fewer samples per treatment, today we'll use a gene count matrix that has ten samples (five from each treatment). This matrix is on the class GitHub page, it's called ```gene_count_matrix_full.csv```. Download this file to your **local** machine. We won't need to do anything on the computing cluster today!
 
+Download this file by scrolling to the top of the page, clicking on the ```gene_count_matrix_full.csv``` file, and then clicking the "Download" button towards the right hand side of the screen. Do the same thing with the script ```DESeq2.R```, as well as the table that contains information about each of our samples, ```sample_info.csv```. These are the three files we'll be working with today. 
 
+Open up RStudio on your computer, and open the ```DESeq2.R``` script you just downloaded. Read through the script and follow along with the instructions in the comments to analyze the expression data.
 
 ## Acknowledgements
 This workshop was made possible by funding provided to Fernando Alda from the University of Tennessee at Chattanooga. 
@@ -207,3 +209,5 @@ This workshop was made possible by funding provided to Fernando Alda from the Un
 The sample datasets used in this analysis are publicly available on NCBI. The version of the *A. polyacanthus* genome used is available at accession number GCF_002109545.1. The raw RNA-Seq reads are available under NCBI BioProject Number PRJNA489934 and SRA accession number SRP160415. We thank the following authors of the study that generated this dataset: Moises Bernal, Celia Schunter, Robert Lehmann, Damien Lightfoot, Bridie Allan, Heather Veilleux, Jodie Rummer, Philip Munday, and Timothy Ravasi, as they have graciously allowed us to use their data (Bernal et al. 2020, *Science Advances* 6(12): eaay3423). 
 
 The formatting of this tutorial, as well as the "Getting set up" portion of this page, borrow heavily from the Scripting for Biologists python tutorials written by [Jamie Oaks](http://phyletica.org) available [here](https://github.com/joaks1). 
+
+Portions of the analysis pipeline followed here (especially the code for StringTie, the code used to prep read counts for DESeq2, and portions of the R code and analyses in DESeq2) were based on code and activities from [Tonia Schwartz's](https://www.schwartzlab-ecoevolutionarygenomics.org/) Functional Genomics class at Auburn University.
