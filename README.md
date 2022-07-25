@@ -197,6 +197,9 @@ You can see that each sample has its own column, and each gene has its own row. 
 
 ## Day 2: Testing for differential gene expression
 
+Today, we are going to use a gene count matrix to test for statistically significant differentially expressed genes between fish in two different treatment groups. We prepared one of these gene count matrices yesterday, for four samples. Because it's harder to detect significant differences between treatments when you have fewer samples per treatment, today we'll use a gene count matrix that has ten samples (five from each treatment). This matrix is on the class GitHub page, it's called ```gene_count_matrix_full.csv```. Download this file to your **local** machine. We won't need to do anything on the computing cluster today!
+
+
 
 ## Acknowledgements
 This workshop was made possible by funding provided to Fernando Alda from the University of Tennessee at Chattanooga. 
