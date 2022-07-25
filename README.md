@@ -51,7 +51,7 @@ cd RNASeq_Workshop
 
 For this tutorial, we are going to use a sample RNA-Seq dataset from [this paper](https://www.science.org/doi/full/10.1126/sciadv.aay3423). The authors examined how gene expression changed in several species of fish as they were exposed to unseasonably warm temperatures over several months. We will use RNA-Seq data from one of the species (the spiny chromis damselfish, *Acanthochromis polyacanthus*) and compare gene expression between two months (December, when temperatures were relatively normal, and February, when temperatures were far above average). 
 
-In the shared class directory, there are 8 files with the extension ".fq". These fastq files contain "raw" RNA-Seq reads for 4 samples - 2 from December and 2 from February. Each sample will have data in two different files: one will have the extension \_mate1.fq, and the other will be \_mate2.fq. This is because these samples were sequenced using paired-end Illumina sequencing, which generates two sequences per input molecule of RNA (one sequence in the "forward" direction, and one in the "reverse" direction). These paired sequences are stored in two different files.
+In the shared class directory, there are 8 files with the extension ```.fq```. These fastq files contain "raw" RNA-Seq reads for 4 samples - 2 from December and 2 from February. Each sample will have data in two different files: one will have the extension ```\_mate1.fq```, and the other will be ```\_mate2.fq```. This is because these samples were sequenced using paired-end Illumina sequencing, which generates two sequences per input molecule of RNA (one sequence in the "forward" direction, and one in the "reverse" direction). These paired sequences are stored in two different files.
 
 You'll need to copy these files from the class directory to your home directory before you can start working on them. Type the following code in your terminal:
 
@@ -116,7 +116,7 @@ The fourth column in the output from this command will show the approximate size
 
 ### Checking the quality of our trimmed and filtered reads
 
-Let's make sure that the filtering steps worked well, and that the quality of our sequences increased after trimming and filtering. To do this, we'll run FastQC again, but this time on the \*\_paired.fq files, which contain the sequences we will proceed with for our analyses.
+Let's make sure that the filtering steps worked well, and that the quality of our sequences increased after trimming and filtering. To do this, we'll run FastQC again, but this time on the ```\*\_paired.fq``` files, which contain the sequences we will proceed with for our analyses.
 
 We'll make a new directory for these reports.
 
@@ -149,11 +149,51 @@ cat hisat2.sh
 sbatch hisat2.sh
 ```
 
+Formatting the data into sorted, indexed ```.bam``` files should take 10-15 minutes. 
+
+When this script is done running, take a look at the SLURM output file (it will be called ```slurm-[XXXXX].out```, where [XXXXX] is the job number). Examine the overall mapping percentage for each of your four samples. Does it look like we have a good reference? How can you tell?
+
 ### Generating read count data
 
 For each sample, we have mapped our RNA-Seq reads to our reference genome. We now need to generate a matrix of counts that correspond to the expression levels of each gene. We can do this using the program [StringTie](https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual). 
 
+StringTie will look at our alignment and use the genome annotation information that we provide in ```genomic.gff``` to count the number of RNA-Seq reads that have mapped to each gene and transcript in our *A. polyacanthus* genome. You'll need to copy this ```genomic.gff``` file from the shared directory to your home directory by doing the following:
 
+```shell
+cp /scr/south_east_comp/genomic.gff ~/
+```
+
+Then, once you've copied the annotation file to your home directory, examine the ```stringtie.sh``` script in your RNASeq_Workshop folder. Once you understand what it is doing, run it.
+
+```shell
+# Examine the script
+cat stringtie.sh
+# Run the script
+sbatch stringtie.sh
+```
+
+### Formatting read count data for DESeq2
+
+Finally, you'll need to format your read count data to be appropriately read in to DESeq2, the R package we will use for our differential gene expression tests. The developers of StringTie provide a Python script called ```prepDE.py``` on their website for this purpose. I've copied the script to our RNASeq_Workshop folder, but you can also download it directly from the source [here](http://ccb.jhu.edu/software/stringtie/dl/prepDE.py). 
+
+```shell
+# Start by moving into your RNASeq_Workshop folder
+cd ~/RNASeq_Workshop
+# Run the prepDE.py script from the command line
+# The -l flag allows us to specify that the average read length in our alignment was 151 bp
+# The -i flag tells the script where to look for the input files. Our stringtie outputs for each sample were written to a sample-specific folder in ~/stringtie_results. 
+python prepDE.py -l 151 -i ~/stringtie_results/
+```
+
+You should now have two output files from this command: one called ```gene_count_matrix.csv``` and one called ```transcript_count_matrix.csv```. These files contain the number of reads that mapped to each gene (or transcript) in the *A. polyacanthus* genome, for each sample. The files are formatted like this:
+
+| Gene | Apoly_Dec_1 | Apoly_Dec_2 | Apoly_Feb_1 | Apoly_Feb_2 |
+| --- | --- | --- | --- | --- |
+| gene-1 | 12 | 15 | 40 | 38 | 
+| gene-2 | 705 | 813 | 30 | 55 | 
+| gene-3 | 0 | 2 | 44 | 17 |
+
+You can see that each sample has its own column, and each gene has its own row. For our differential gene expression analyses tomorrow, we will use the ```gene_count_matrix.csv``` file, because we are interested in differential gene expression, and not particularly interested in differential expression patterns of transcripts. If you were doing a study where transcript-specific differences in expression patterns were important, you might want to use the ```transcript_count_matrix.csv``` file instead. 
 
 ## Day 2: Testing for differential gene expression
 
