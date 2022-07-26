@@ -30,12 +30,20 @@ git clone the-url-you-copied-in-step-3
 
 7. It will prompt you to enter your Github username. Type it right into the terminal. Then, it will prompt you to enter your password. Copy the Personal Access Token you generated in Step 2, and paste it into the terminal, then hit enter. This will create a copy of this repository in your account on the Epyc cluster. 
 
-7. Next, move into this directory:
+8. Next, move into this directory:
 ```shell
 cd RNASeq_Workshop
 ```
 
-8. At this point, you should be in your own local copy of the repository, which contains all the scripts you'll need to edit and run to analyze our practice dataset. 
+9. At this point, you should be in your own local copy of the repository, which contains all the scripts you'll need to edit and run to analyze our practice dataset. 
+
+10. Finally, let's make the scripts that you're going to run executable. From inside the ```RNASeq_Workshop``` folder, type the following:
+
+```shell
+chmod +x *.sh
+```
+
+**Congrats!** You're all set up to process some RNASeq data!
 
 ## Day 1: Cleaning and mapping reads
 
