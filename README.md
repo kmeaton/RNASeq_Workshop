@@ -12,26 +12,30 @@ If you don't already have an account on [Github](https://github.com), make one n
 
 1. Log in to your [Github](https://github.com) account.
 
-2. Fork this repository by clicking the "Fork" button on the upper right of this page. After a few seconds, you should be looking at your own copy of this repository in your own Github account. 
+2. Set up a Personal Access Token so that you can access your Github account from the command line. Go to the top right-hand corner of the page which has a circle (containing your profile picture). Click on this icon, then click "Settings". From your settings page, scroll down the menu of options on the left hand side of the screen. Click on "Developer settings". Then, again in the menu on the left side of the page, click on "Personal access tokens". Click "Generate new token". Under "Note", name this personal access token "RNASeq-Workshop". Set the key to expire in 30 days (the default. Under "Select scopes", click the first box, next to "repo". Then scroll all the way down the page and click the green "Generate token" button. This will essentially create a temporary password for you to access your Github account from the command line. Copy the personal access token you have just generated (it should just be a string of random letters and numbers). Make sure you save it somewhere, because you won't be able to go back and re-copy it to your clipboard later! I recommend copy/pasting it into the notes app on your computer, or into a Word document you have saved. Don't close out of the page until you've got the token saved. 
 
-3. Click the green "Code" button at the upper right of this page. Click the tab that says HTTPS, then copy the link that's shown below it. 
+3. Once your token is saved, navigate back to this page. Fork this repository by clicking the "Fork" button on the upper right of this page. After a few seconds, you should be looking at your own copy of this repository in your own Github account. 
 
-4. Log in to your UTC computing cluster account by typing the following code into the terminal, substituting your UTC username in where it says [user]. You'll be prompted to enter a password, which you'll type right into the terminal.
+4. Click the green "Code" button at the upper right of this page. Click the tab that says HTTPS, then copy the link that's shown below it. 
+
+5. Log in to your UTC computing cluster account by typing the following code into the terminal, substituting your UTC username in where it says [user]. You'll be prompted to enter a password, which you'll type right into the terminal.
 ```shell
 ssh [user]@epyc.simcenter.utc.edu
 ```
 
-5. Once you're logged in, in your home directory, type the following to clone into the repository. Make sure you're cloning into __your__ fork of the repository, not my original one.
+6. Once you're logged in, in your home directory, type the following to clone into the repository. Make sure you're cloning into __your__ fork of the repository, not my original one.
 ```shell
 git clone the-url-you-copied-in-step-3
 ```
 
-6. Next, move into this directory:
+7. It will prompt you to enter your Github username. Type it right into the terminal. Then, it will prompt you to enter your password. Copy the Personal Access Token you generated in Step 2, and paste it into the terminal, then hit enter. This will create a copy of this repository in your account on the Epyc cluster. 
+
+7. Next, move into this directory:
 ```shell
 cd RNASeq_Workshop
 ```
 
-7. At this point, you should be in your own local copy of the repository, which contains all the scripts you'll need to edit and run to analyze our practice dataset. 
+8. At this point, you should be in your own local copy of the repository, which contains all the scripts you'll need to edit and run to analyze our practice dataset. 
 
 ## Day 1: Cleaning and mapping reads
 
