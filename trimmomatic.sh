@@ -16,7 +16,7 @@ cd ~
 
 # This creates a variable called "samplelist", which contains a list of the names of samples we are going to analyze.
 # These names should match the base names of the raw fastq files, removing the "_mate1.fq" or "_mate2.fq"
-samplelist="Apoly_Dec_1 Apoly_Dec_2 Apoly_Dec_3 Apoly_Dec_4 Apoly_Dec_5 Apoly_Feb_1 Apoly_Feb_2 Apoly_Feb_3 Apoly_Feb_4 Apoly_Feb_5"
+samplelist="Apoly_Dec_1 Apoly_Dec_2 Apoly_Feb_1 Apoly_Feb_2"
 
 # This allows us to "loop" through every item in the variable $samplelist
 # So for each "sample" in our $samplelist, we will run the following command
