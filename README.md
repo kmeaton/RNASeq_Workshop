@@ -140,9 +140,9 @@ We'll make a new directory for these reports.
 mkdir filtered_reports
 ```
 
-Then, modify the ```fastqc.sh``` script in your ```RNASeq_Workshop``` folder so that it will run on your filtered files and send the output to the filtered_reports folder we just created, and save it as a new file called ```fastqc_filtered.sh```. You can do this in your favorite text editor, like nano or vim. 
+Then, modify the ```fastqc.sh``` script in your ```RNASeq_Workshop``` folder so that it will run on your filtered files and send the output to the ```filtered_reports``` folder we just created, and save it as a new file called ```fastqc_filtered.sh```. You can do this in your favorite text editor, like nano or vim. 
 
-Run your new script, ```fastqc_filtered.sh```, and then download the reports to your local machine like we did before. Check out the sequence quality now - how has it improved?
+Make your your new script, ```fastqc_filtered.sh``` executable (as we did with the other scripts in step 10 of "Getting set up"), run it, and then download the HTML reports to your local machine like we did before. Check out the sequence quality now - how has it improved?
 
 ### Mapping our trimmed reads to a reference
 
