@@ -120,7 +120,11 @@ Apoly_Dec_1_mate2_unpaired.fq
 We will continue our analyses only using the "paired" files. These contain sequences where both members of a "pair" of reads have passed the quality filtering step. Check out the sizes of the fastq files containing the paired and unpaired reads by running the following commands:
 
 ```shell
+# Move into the directory where the files have been output
+cd ~/
+# List the information about the "paired" fastq files
 ls -lh *_paired.fq
+# List the information about the "unpaired" fastq files
 ls -lh *_unpaired.fq
 ```
 
@@ -136,7 +140,7 @@ We'll make a new directory for these reports.
 mkdir filtered_reports
 ```
 
-Then, modify the ```fastqc.sh``` script in your folder so that it will run on your filtered files and send the output to the filtered_reports folder we just created, and save it as a new file called ```fastqc_filtered.sh```. You can do this in your favorite text editor, like nano or vim. 
+Then, modify the ```fastqc.sh``` script in your ```RNASeq_Workshop``` folder so that it will run on your filtered files and send the output to the filtered_reports folder we just created, and save it as a new file called ```fastqc_filtered.sh```. You can do this in your favorite text editor, like nano or vim. 
 
 Run your new script, ```fastqc_filtered.sh```, and then download the reports to your local machine like we did before. Check out the sequence quality now - how has it improved?
 
