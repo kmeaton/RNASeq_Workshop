@@ -108,13 +108,13 @@ cat trimmomatic.sh
 sbatch trimmomatic.sh
 ```
 
-This should only take a few minutes. This program takes paired-end sequencing data for each of our samples, trims any sequencing adapters that are present in the reads, and then removes any low-quality sequences from the dataset. You'll end up with four files for each sample:
+This should only take a few minutes. This program takes paired-end sequencing data for each of our samples, trims any sequencing adapters that are present in the reads, and then removes any low-quality sequences from the dataset. You'll end up with four files for each sample - here's an example of what it'll look like for the sample ```Apoly_Dec_1```:
 
 ```
-[sample]_1_paired.fq
-[sample]_1_unpaired.fq
-[sample]_2_paired.fq
-[sample]_2_unpaired.fq
+Apoly_Dec_1_mate1_paired.fq
+Apoly_Dec_1_mate1_unpaired.fq
+Apoly_Dec_1_mate2_paired.fq
+Apoly_Dec_1_mate2_unpaired.fq
 ```
 
 We will continue our analyses only using the "paired" files. These contain sequences where both members of a "pair" of reads have passed the quality filtering step. Check out the sizes of the fastq files containing the paired and unpaired reads by running the following commands:
