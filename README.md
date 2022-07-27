@@ -12,26 +12,38 @@ If you don't already have an account on [Github](https://github.com), make one n
 
 1. Log in to your [Github](https://github.com) account.
 
-2. Fork this repository by clicking the "Fork" button on the upper right of this page. After a few seconds, you should be looking at your own copy of this repository in your own Github account. 
+2. Set up a Personal Access Token so that you can access your Github account from the command line. Go to the top right-hand corner of the page which has a circle (containing your profile picture). Click on this icon, then click "Settings". From your settings page, scroll down the menu of options on the left hand side of the screen. Click on "Developer settings". Then, again in the menu on the left side of the page, click on "Personal access tokens". Click "Generate new token". Under "Note", name this personal access token "RNASeq-Workshop". Set the key to expire in 30 days (the default. Under "Select scopes", click the first box, next to "repo". Then scroll all the way down the page and click the green "Generate token" button. This will essentially create a temporary password for you to access your Github account from the command line. Copy the personal access token you have just generated (it should just be a string of random letters and numbers). Make sure you save it somewhere, because you won't be able to go back and re-copy it to your clipboard later! I recommend copy/pasting it into the notes app on your computer, or into a Word document you have saved. Don't close out of the page until you've got the token saved. 
 
-3. Click the green "Code" button at the upper right of this page. Click the tab that says HTTPS, then copy the link that's shown below it. 
+3. Once your token is saved, navigate back to this page. Fork this repository by clicking the "Fork" button on the upper right of this page. After a few seconds, you should be looking at your own copy of this repository in your own Github account. 
 
-4. Log in to your UTC computing cluster account by typing the following code into the terminal, substituting your UTC username in where it says [user]. You'll be prompted to enter a password, which you'll type right into the terminal.
+4. Click the green "Code" button at the upper right of this page. Click the tab that says HTTPS, then copy the link that's shown below it. 
+
+5. Log in to your UTC computing cluster account by typing the following code into the terminal, substituting your UTC username in where it says [user]. You'll be prompted to enter a password, which you'll type right into the terminal.
 ```shell
 ssh [user]@epyc.simcenter.utc.edu
 ```
 
-5. Once you're logged in, in your home directory, type the following to clone into the repository. Make sure you're cloning into __your__ fork of the repository, not my original one.
+6. Once you're logged in, in your home directory, type the following to clone into the repository. Make sure you're cloning into __your__ fork of the repository, not my original one.
 ```shell
 git clone the-url-you-copied-in-step-3
 ```
 
-6. Next, move into this directory:
+7. It will prompt you to enter your Github username. Type it right into the terminal. Then, it will prompt you to enter your password. Copy the Personal Access Token you generated in Step 2, and paste it into the terminal, then hit enter. This will create a copy of this repository in your account on the Epyc cluster. 
+
+8. Next, move into this directory:
 ```shell
 cd RNASeq_Workshop
 ```
 
-7. At this point, you should be in your own local copy of the repository, which contains all the scripts you'll need to edit and run to analyze our practice dataset. 
+9. At this point, you should be in your own local copy of the repository, which contains all the scripts you'll need to edit and run to analyze our practice dataset. 
+
+10. Finally, let's make the scripts that you're going to run executable. From inside the ```RNASeq_Workshop``` folder, type the following:
+
+```shell
+chmod +x *.sh
+```
+
+**Congrats!** You're all set up to process some RNASeq data!
 
 ## Day 1: Cleaning and mapping reads
 
@@ -96,19 +108,23 @@ cat trimmomatic.sh
 sbatch trimmomatic.sh
 ```
 
-This should only take a few minutes. This program takes paired-end sequencing data for each of our samples, trims any sequencing adapters that are present in the reads, and then removes any low-quality sequences from the dataset. You'll end up with four files for each sample:
+This should only take a few minutes. This program takes paired-end sequencing data for each of our samples, trims any sequencing adapters that are present in the reads, and then removes any low-quality sequences from the dataset. You'll end up with four files for each sample - here's an example of what it'll look like for the sample ```Apoly_Dec_1```:
 
 ```
-[sample]_1_paired.fq
-[sample]_1_unpaired.fq
-[sample]_2_paired.fq
-[sample]_2_unpaired.fq
+Apoly_Dec_1_mate1_paired.fq
+Apoly_Dec_1_mate1_unpaired.fq
+Apoly_Dec_1_mate2_paired.fq
+Apoly_Dec_1_mate2_unpaired.fq
 ```
 
 We will continue our analyses only using the "paired" files. These contain sequences where both members of a "pair" of reads have passed the quality filtering step. Check out the sizes of the fastq files containing the paired and unpaired reads by running the following commands:
 
 ```shell
+# Move into the directory where the files have been output
+cd ~/
+# List the information about the "paired" fastq files
 ls -lh *_paired.fq
+# List the information about the "unpaired" fastq files
 ls -lh *_unpaired.fq
 ```
 
@@ -124,9 +140,9 @@ We'll make a new directory for these reports.
 mkdir filtered_reports
 ```
 
-Then, modify the ```fastqc.sh``` script in your folder so that it will run on your filtered files and send the output to the filtered_reports folder we just created, and save it as a new file called ```fastqc_filtered.sh```. You can do this in your favorite text editor, like nano or vim. 
+Then, modify the ```fastqc.sh``` script in your ```RNASeq_Workshop``` folder so that it will run on your filtered files and send the output to the ```filtered_reports``` folder we just created, and save it as a new file called ```fastqc_filtered.sh```. You can do this in your favorite text editor, like nano or vim. 
 
-Run your new script, ```fastqc_filtered.sh```, and then download the reports to your local machine like we did before. Check out the sequence quality now - how has it improved?
+Make your your new script, ```fastqc_filtered.sh``` executable (as we did with the other scripts in step 10 of "Getting set up"), run it, and then download the HTML reports to your local machine like we did before. Check out the sequence quality now - how has it improved? (Hint: Look at the final graph that shows "Adapter content".)
 
 ### Mapping our trimmed reads to a reference
 
@@ -182,7 +198,8 @@ cd ~/RNASeq_Workshop
 # Run the prepDE.py script from the command line
 # The -l flag allows us to specify that the average read length in our alignment was 151 bp
 # The -i flag tells the script where to look for the input files. Our stringtie outputs for each sample were written to a sample-specific folder in ~/stringtie_results. 
-python prepDE.py -l 151 -i ~/stringtie_results/
+# The -g and -t flags allow us to specify where we want the gene and transcript result files to be output to, respectively. 
+python prepDE.py -l 151 -i ~/stringtie_results/ -g ~/gene_count_matrix.csv -t ~/transcript_count_matrix.csv
 ```
 
 You should now have two output files from this command: one called ```gene_count_matrix.csv``` and one called ```transcript_count_matrix.csv```. These files contain the number of reads that mapped to each gene (or transcript) in the *A. polyacanthus* genome, for each sample. The files are formatted like this:
