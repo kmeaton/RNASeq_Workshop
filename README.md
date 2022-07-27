@@ -198,7 +198,8 @@ cd ~/RNASeq_Workshop
 # Run the prepDE.py script from the command line
 # The -l flag allows us to specify that the average read length in our alignment was 151 bp
 # The -i flag tells the script where to look for the input files. Our stringtie outputs for each sample were written to a sample-specific folder in ~/stringtie_results. 
-python prepDE.py -l 151 -i ~/stringtie_results/
+# The -g and -t flags allow us to specify where we want the gene and transcript result files to be output to, respectively. 
+python prepDE.py -l 151 -i ~/stringtie_results/ -g ~/gene_count_matrix.csv -t ~/transcript_count_matrix.csv
 ```
 
 You should now have two output files from this command: one called ```gene_count_matrix.csv``` and one called ```transcript_count_matrix.csv```. These files contain the number of reads that mapped to each gene (or transcript) in the *A. polyacanthus* genome, for each sample. The files are formatted like this:
