@@ -23,7 +23,7 @@ mkdir stringtie_results
 # -G allows you to specify a gff file containing annotation information for the genome you mapped your reads to
 # -B specifies the output format of tables containing coverage data for the reference transcripts in the GFF file
 
-samplelist="Apoly_Dec_1 Apoly_Dec_2 Apoly_Dec_3 Apoly_Dec_4 Apoly_Dec_5 Apoly_Feb_1 Apoly_Feb_2 Apoly_Feb_3 Apoly_Feb_4 Apoly_Feb_5"
+samplelist="Apoly_Dec_1 Apoly_Dec_2 Apoly_Feb_1 Apoly_Feb_2"
 
 for sample in ${samplelist}
 do

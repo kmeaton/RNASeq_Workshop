@@ -36,7 +36,7 @@ cd ~
 
 # Now that we have our index built, let's run HISAT2 to map the reads from each sample to our genome. 
 # We'll loop through all of our samples like we did with the trimmomatic script. 
-samplelist="Apoly_Dec_1 Apoly_Dec_2 Apoly_Dec_3 Apoly_Dec_4 Apoly_Dec_5 Apoly_Feb_1 Apoly_Feb_2 Apoly_Feb_3 Apoly_Feb_4 Apoly_Feb_5"
+samplelist="Apoly_Dec_1 Apoly_Dec_2 Apoly_Feb_1 Apoly_Feb_2"
 
 # For each sample in our list:
 for sample in ${samplelist}
