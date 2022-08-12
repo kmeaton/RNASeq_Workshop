@@ -5,7 +5,7 @@
 
 # Begin by setting your working directory to wherever you downloaded the gene count matrix and the sample info table.
 # This should be the same folder that this script is in!
-setwd("~/Desktop/")
+setwd("/Users/katieeaton/Dropbox/My Mac (Katie’s MacBook Pro)/Downloads/RNASeq_Workshop-main 2")
 
 # Install the DESeq2 package if you haven't already. If it's already installed, skip ahead to loading the library.
 if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -283,16 +283,16 @@ head(stats_df)
 # Let's investigate this module.
 
 # First, let's just visualize what the eigengene for this module looks like between different treatment groups
-# Set up the module eigengene using the sample labels that we need
-module_1_df <- module_eigengenes %>%
+# Generate a table of eigengene values for each sample for each module
+module_df <- module_eigengenes %>%
   tibble::rownames_to_column("FishName") %>%
   dplyr::inner_join(coldata %>%
                       dplyr::select(fishID, treatment),
                     by = c("FishName" = "fishID"))
 
 
-# Now plot the module
-ggplot(module_1_df, aes(x=treatment, y=ME1, color=treatment)) + 
+# Now plot the eigengene value of each sample in the module of interest, on the y-axis specify the name of the module you want to plot
+ggplot(module_df, aes(x=treatment, y=ME1, color=treatment)) + 
   geom_boxplot(width = 0.2, outlier.shape = NA) + 
   ggforce::geom_sina(maxwidth = 0.3) + theme_classic()
 
@@ -300,15 +300,18 @@ ggplot(module_1_df, aes(x=treatment, y=ME1, color=treatment)) +
 # What conclusion can we draw about this module of co-expressed genes between our treatment groups?
 
 # Let's find out what genes are a part of module 1! Maybe we can understand the functionality of this co-expressed module!
+# First we can generate a big table showing what module EVERY gene is a part of
 gene_module_key <- tibble::enframe(bwnet$colors, name = "gene", value = "module") %>%
   dplyr::mutate(module = paste0("ME", module))
-gene_module_key %>%
+
+# To generate a table just for module 1, we can do the following
+gene_module_key_ME1 <- gene_module_key %>%
   dplyr::filter(module == "ME1")
 
 # If each row in this table is a gene in module 1, how many genes are there in this module of co-expression?
 
 # Let's write these results to a table so we can examine them more easily.
-readr::write_tsv(gene_module_key, file = "WGCNA_module_1.tsv")
+readr::write_tsv(gene_module_key_ME1, file = "WGCNA_module_1.tsv")
 # Search through this results file like how we looked at the full output of DESeq. Are there any interesting genes in this module of co-expression?
 
 # Finally, let's make a heatmap that summarizes the expression patterns of each gene in this module, across all samples. 
